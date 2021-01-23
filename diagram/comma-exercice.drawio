@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-23T18:12:23.464Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="FiBPENoH8Rkp_pDd9YBx" version="14.2.7" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-23T21:08:21.951Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="IjSfogzW6oVCwfkiV3CC" version="14.2.7" type="github">
   <diagram name="Page-1" id="f1b7ffb7-ca1e-a977-7cf5-a751b3c06c05">
     <mxGraphModel dx="1209" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="826" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -49,7 +49,7 @@
         <mxCell id="GgNjHgiUNmpm6prIaHa7-83" value="Wir danken Ihnen&lt;font color=&quot;#009900&quot;&gt;,&lt;/font&gt; dass Sie uns die Malerarbeiten anvertraut haben, und hoffen, dass Sie mit unserer Arbeit hundert Prozent zufrieden sind und wir wieder einmal für Sie tätig sein dürfen." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="GgNjHgiUNmpm6prIaHa7-81">
           <mxGeometry x="4.5" y="10" width="351" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="GgNjHgiUNmpm6prIaHa7-84" value="Nächste Frage" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="GgNjHgiUNmpm6prIaHa7-84" value="Prüfen" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="470" y="810" width="130" height="40" as="geometry" />
         </mxCell>
         <mxCell id="GgNjHgiUNmpm6prIaHa7-85" value="Frage 1 von 10" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
