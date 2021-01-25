@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CommaExerciseService} from "./comma-exercise.service";
-import {EXAMPLE_TASKS} from "../../global";
+import {EXAMPLE_QUESTIONS} from "../../global";
 
 export enum CommaExerciseStatus {
-  TASK_IN_PROGRESS,
-  TASK_ERROR,
-  TASK_FINISHED,
+  QUESTION_IN_PROGRESS,
+  QUESTION_ERROR,
+  QUESTION_FINISHED,
   EXERCISE_FINISHED
 }
 
@@ -18,9 +18,9 @@ export class CommaExerciseComponent implements OnInit {
 
   chars: string[] = [];
   hoverCharIndex = -1;
-  currentTaskIdx = -1;
-  tasks = EXAMPLE_TASKS; // TODO
-  commaExerciseStatus = CommaExerciseStatus.TASK_IN_PROGRESS;
+  currentQuestionIdx = -1;
+  questions = EXAMPLE_QUESTIONS; // TODO
+  commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
   primaryButtonText = 'Prüfen';
 
   private commaExerciseService = new CommaExerciseService();
@@ -28,33 +28,33 @@ export class CommaExerciseComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.loadNextTask();
+    this.loadNextQuestion();
   }
 
-  private loadNextTask() {
-    this.currentTaskIdx++;
-    const withoutComma = this.commaExerciseService.getSentenceWithoutComma(this.tasks[this.currentTaskIdx]);
+  private loadNextQuestion() {
+    this.currentQuestionIdx++;
+    const withoutComma = this.commaExerciseService.getSentenceWithoutComma(this.questions[this.currentQuestionIdx]);
     this.chars = withoutComma.split('');
-    this.commaExerciseStatus = CommaExerciseStatus.TASK_IN_PROGRESS;
+    this.commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
     this.primaryButtonText = 'Prüfen';
   }
 
   check() {
-    if (this.commaExerciseStatus === CommaExerciseStatus.TASK_FINISHED) {
-      this.loadNextTask();
+    if (this.commaExerciseStatus === CommaExerciseStatus.QUESTION_FINISHED) {
+      this.loadNextQuestion();
       return;
     }
 
-    const currentTask = this.tasks[this.currentTaskIdx];
-    const solution = this.commaExerciseService.getSentenceWithoutWhiteSpaceAfterComma(currentTask);
+    const currentQuestion = this.questions[this.currentQuestionIdx];
+    const solution = this.commaExerciseService.getSentenceWithoutWhiteSpaceAfterComma(currentQuestion);
     const userInput = this.chars.join('');
     const result = this.commaExerciseService.solve(userInput, solution);
 
     if (result.errors.length === 0) {
-      this.commaExerciseStatus = CommaExerciseStatus.TASK_FINISHED;
+      this.commaExerciseStatus = CommaExerciseStatus.QUESTION_FINISHED;
       this.primaryButtonText = 'Nächste Frage';
     } else {
-      this.commaExerciseStatus = CommaExerciseStatus.TASK_ERROR;
+      this.commaExerciseStatus = CommaExerciseStatus.QUESTION_ERROR;
     }
   }
 
