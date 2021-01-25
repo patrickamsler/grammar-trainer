@@ -2,6 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {CommaExerciseService} from "./comma-exercise.service";
 import {EXAMPLE_TASKS} from "../../global";
 
+export enum CommaExerciseStatus {
+  TASK_IN_PROGRESS,
+  TASK_ERROR,
+  TASK_FINISHED,
+  EXERCISE_FINISHED
+}
+
 @Component({
   selector: 'app-comma-exercise',
   templateUrl: './comma-exercise.component.html',
@@ -11,27 +18,44 @@ export class CommaExerciseComponent implements OnInit {
 
   chars: string[] = [];
   hoverCharIndex = -1;
-  currentTaskIdx = 0;
+  currentTaskIdx = -1;
   tasks = EXAMPLE_TASKS; // TODO
+  commaExerciseStatus = CommaExerciseStatus.TASK_IN_PROGRESS;
+  primaryButtonText = 'Prüfen';
 
   private commaExerciseService = new CommaExerciseService();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.loadCurrentTask();
+    this.loadNextTask();
   }
 
-  private loadCurrentTask() {
+  private loadNextTask() {
+    this.currentTaskIdx++;
     const withoutComma = this.commaExerciseService.getSentenceWithoutComma(this.tasks[this.currentTaskIdx]);
     this.chars = withoutComma.split('');
+    this.commaExerciseStatus = CommaExerciseStatus.TASK_IN_PROGRESS;
+    this.primaryButtonText = 'Prüfen';
   }
 
   check() {
-    const solution = this.tasks[this.currentTaskIdx];
-    const userInput = this.chars.join();
+    if (this.commaExerciseStatus === CommaExerciseStatus.TASK_FINISHED) {
+      this.loadNextTask();
+      return;
+    }
+
+    const currentTask = this.tasks[this.currentTaskIdx];
+    const solution = this.commaExerciseService.getSentenceWithoutWhiteSpaceAfterComma(currentTask);
+    const userInput = this.chars.join('');
     const result = this.commaExerciseService.solve(userInput, solution);
-    console.log(result);
+
+    if (result.errors.length === 0) {
+      this.commaExerciseStatus = CommaExerciseStatus.TASK_FINISHED;
+      this.primaryButtonText = 'Nächste Frage';
+    } else {
+      this.commaExerciseStatus = CommaExerciseStatus.TASK_ERROR;
+    }
   }
 
   onCharClick(charSpan: HTMLSpanElement, index: number) {
@@ -39,12 +63,12 @@ export class CommaExerciseComponent implements OnInit {
     const previousChar = this.chars[index - 1];
     const nextChar = this.chars[index + 1];
     if (char === ',') {
-      this.chars.splice(index, 1);
-    } else if (char === ' ' && previousChar !== ',') {
-      this.chars.splice(index, 0, ',');
+      this.chars.splice(index, 1, ' ');
+    } else if (char === ' ') {
+      this.chars.splice(index, 1, ',');
       this.hoverCharIndex = -1;
     } else if (nextChar === ' ') {
-      this.chars.splice(index + 1, 0, ',');
+      this.chars.splice(index + 1, 1, ',');
       this.hoverCharIndex = -1;
     }
   }
