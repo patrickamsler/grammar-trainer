@@ -25,10 +25,14 @@ export class CommaExerciseComponent implements OnInit {
   onCharClick(charSpan: HTMLSpanElement, index: number) {
     const char = charSpan.textContent;
     const previousChar = this.chars[index - 1];
+    const nextChar = this.chars[index + 1];
     if (char === ',') {
-      this.chars.splice(index, 1, ' ');
+      this.chars.splice(index, 1);
     } else if (char === ' ' && previousChar !== ',') {
       this.chars.splice(index, 0, ',');
+      this.hoverCharIndex = -1;
+    } else if (nextChar === ' ') {
+      this.chars.splice(index + 1, 0, ',');
       this.hoverCharIndex = -1;
     }
   }
