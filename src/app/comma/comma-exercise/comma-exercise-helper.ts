@@ -41,7 +41,7 @@ export class CommaExerciseHelper {
     if (commasCorrect === 0 && commasSet > 0) {
       return 'Kein Komma ohne Grund.';
     } else if (commasSet < commasCorrect) {
-      return `Du hast ${commasSet} Kommas gesetzt, aber es sind ${commasCorrect} Kommas nötig.`;
+      return `Du hast ${commasSet} Kommas gesetzt, es sind aber ${commasCorrect} Kommas nötig.`;
     } else if (commasSet > commasCorrect) {
       return `Du hast ${commasSet} Kommas gesetzt, nötig wären aber nur ${commasCorrect} Kommas.`;
     } else {

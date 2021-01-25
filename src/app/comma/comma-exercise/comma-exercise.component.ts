@@ -23,6 +23,7 @@ export class CommaExerciseComponent implements OnInit {
   hint = '';
 
   private commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
+  private numOfIncorrectAnswers = 0;
 
   constructor() {}
 
@@ -36,6 +37,7 @@ export class CommaExerciseComponent implements OnInit {
     this.chars = withoutComma.split('');
     this.commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
     this.hint = '';
+    this.numOfIncorrectAnswers = 0;
   }
 
   primaryButtonClick() {
@@ -63,7 +65,12 @@ export class CommaExerciseComponent implements OnInit {
       this.hint = 'Richtig'; // TODO add icon
     } else {
       this.commaExerciseStatus = CommaExerciseStatus.QUESTION_ERROR;
-      this.hint = 'Die Lösung enthält Fehler. ' + result.hint;
+      this.numOfIncorrectAnswers++;
+      if (this.numOfIncorrectAnswers > 1) {
+        this.hint = result.hint;
+      } else {
+        this.hint = 'Die Lösung enthält Fehler.';
+      }
     }
   }
 

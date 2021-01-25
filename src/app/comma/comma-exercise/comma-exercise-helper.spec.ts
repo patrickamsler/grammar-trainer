@@ -51,7 +51,7 @@ describe('CommaExerciseService', () => {
 
       expect(result.correct.length).toEqual(0);
       expect(result.errors).toEqual([16, 25]);
-      expect(result.hint).toEqual('Du hast 0 Kommas gesetzt, aber es sind 2 Kommas nötig.');
+      expect(result.hint).toEqual('Du hast 0 Kommas gesetzt, es sind aber 2 Kommas nötig.');
     });
     it('returns errors of more commas are set the necessary', () => {
       const userInput = 'Sie wirkte,ruhig,gelassen,entspannt.';
