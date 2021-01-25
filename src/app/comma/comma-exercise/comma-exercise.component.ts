@@ -20,6 +20,7 @@ export class CommaExerciseComponent implements OnInit {
   hoverCharIndex = -1;
   currentQuestionIdx = -1;
   questions = EXAMPLE_QUESTIONS; // TODO
+  hint = '';
 
   private commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
   private commaExerciseService = new CommaExerciseService();
@@ -35,6 +36,7 @@ export class CommaExerciseComponent implements OnInit {
     const withoutComma = this.commaExerciseService.getSentenceWithoutComma(this.questions[this.currentQuestionIdx]);
     this.chars = withoutComma.split('');
     this.commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
+    this.hint = '';
   }
 
   primaryButtonClick() {
@@ -52,6 +54,7 @@ export class CommaExerciseComponent implements OnInit {
     const solution = this.commaExerciseService.getSentenceWithoutWhiteSpaceAfterComma(currentQuestion);
     const userInput = this.chars.join('');
     const result = this.commaExerciseService.solve(userInput, solution);
+    this.hint = result.hint;
 
     if (result.errors.length === 0) {
       if (this.currentQuestionIdx === this.questions.length - 1) {
