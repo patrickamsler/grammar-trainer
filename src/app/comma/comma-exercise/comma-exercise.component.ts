@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {CommaExerciseService} from "./comma-exercise.service";
+import {CommaExerciseHelper} from "./comma-exercise-helper";
 import {EXAMPLE_QUESTIONS} from "../../global";
 
-export enum CommaExerciseStatus {
+enum CommaExerciseStatus {
   QUESTION_IN_PROGRESS,
   QUESTION_ERROR,
   QUESTION_FINISHED,
@@ -23,7 +23,6 @@ export class CommaExerciseComponent implements OnInit {
   hint = '';
 
   private commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
-  private commaExerciseService = new CommaExerciseService();
 
   constructor() {}
 
@@ -33,7 +32,7 @@ export class CommaExerciseComponent implements OnInit {
 
   private loadNextQuestion() {
     this.currentQuestionIdx++;
-    const withoutComma = this.commaExerciseService.getSentenceWithoutComma(this.questions[this.currentQuestionIdx]);
+    const withoutComma = CommaExerciseHelper.getSentenceWithoutComma(this.questions[this.currentQuestionIdx]);
     this.chars = withoutComma.split('');
     this.commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
     this.hint = '';
@@ -51,10 +50,9 @@ export class CommaExerciseComponent implements OnInit {
 
   private checkUserInput() {
     const currentQuestion = this.questions[this.currentQuestionIdx];
-    const solution = this.commaExerciseService.getSentenceWithoutWhiteSpaceAfterComma(currentQuestion);
+    const solution = CommaExerciseHelper.getSentenceWithoutWhiteSpaceAfterComma(currentQuestion);
     const userInput = this.chars.join('');
-    const result = this.commaExerciseService.solve(userInput, solution);
-    this.hint = result.hint;
+    const result = CommaExerciseHelper.solve(userInput, solution);
 
     if (result.errors.length === 0) {
       if (this.currentQuestionIdx === this.questions.length - 1) {
@@ -62,8 +60,10 @@ export class CommaExerciseComponent implements OnInit {
       } else {
         this.commaExerciseStatus = CommaExerciseStatus.QUESTION_FINISHED;
       }
+      this.hint = 'Richtig'; // TODO add icon
     } else {
       this.commaExerciseStatus = CommaExerciseStatus.QUESTION_ERROR;
+      this.hint = 'Die Lösung enthält Fehler. ' + result.hint;
     }
   }
 
