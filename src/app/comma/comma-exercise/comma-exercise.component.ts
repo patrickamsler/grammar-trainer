@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommaExerciseHelper} from "./comma-exercise-helper";
+import {CommaExerciseHelper, CommaExerciseResult} from "./comma-exercise-helper";
 import {EXAMPLE_QUESTIONS} from "../../global";
 
 enum CommaExerciseStatus {
@@ -17,6 +17,8 @@ enum CommaExerciseStatus {
 export class CommaExerciseComponent implements OnInit {
 
   chars: string[] = [];
+  charErrorIdx: number[] = [];
+  charCorrectIdx: number[] = [];
   hoverCharIndex = -1;
   currentQuestionIdx = -1;
   questions = EXAMPLE_QUESTIONS; // TODO
@@ -38,6 +40,8 @@ export class CommaExerciseComponent implements OnInit {
     this.commaExerciseStatus = CommaExerciseStatus.QUESTION_IN_PROGRESS;
     this.hint = '';
     this.numOfIncorrectAnswers = 0;
+    this.charErrorIdx = [];
+    this.charCorrectIdx = [];
   }
 
   primaryButtonClick() {
@@ -50,7 +54,7 @@ export class CommaExerciseComponent implements OnInit {
     }
   }
 
-  private checkUserInput() {
+  private checkUserInput() :CommaExerciseResult  {
     const currentQuestion = this.questions[this.currentQuestionIdx];
     const solution = CommaExerciseHelper.getSentenceWithoutWhiteSpaceAfterComma(currentQuestion);
     const userInput = this.chars.join('');
@@ -72,6 +76,8 @@ export class CommaExerciseComponent implements OnInit {
         this.hint = 'Die Lösung enthält Fehler.';
       }
     }
+
+    return result;
   }
 
   getPrimaryButtonText() {
@@ -85,6 +91,22 @@ export class CommaExerciseComponent implements OnInit {
       case CommaExerciseStatus.EXERCISE_FINISHED:
         return 'Aufgabe beenden';
     }
+  }
+
+  showSolutionClick() {
+    const result = this.checkUserInput();
+    this.charErrorIdx = result.errors;
+    this.charCorrectIdx = result.correct;
+
+    if (this.currentQuestionIdx === this.questions.length - 1) {
+      this.commaExerciseStatus = CommaExerciseStatus.EXERCISE_FINISHED;
+    } else {
+      this.commaExerciseStatus = CommaExerciseStatus.QUESTION_FINISHED;
+    }
+  }
+
+  isSolutionButtonVisible() {
+    return this.numOfIncorrectAnswers >= 3;
   }
 
   onCharClick(charSpan: HTMLSpanElement, index: number) {
@@ -104,7 +126,7 @@ export class CommaExerciseComponent implements OnInit {
   onCharMouseOver(charSpan: HTMLSpanElement, index: number) {
     const char = charSpan.textContent;
     if (char === ' ' && this.chars[index - 1] !== ',' || char === ',') {
-      this.hoverCharIndex = index
+      this.hoverCharIndex = index;
     }
   }
 

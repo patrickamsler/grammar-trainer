@@ -10,13 +10,21 @@
       (click)="onCharClick(charSpan, i)"
       (mouseover)="onCharMouseOver(charSpan, i)"
       (mouseleave)="onCharMouseLeave(charSpan, i)"
-      [ngClass]="{'charHover' : i === hoverCharIndex}"
+      [ngClass]="{'char-hover' : i === hoverCharIndex, 'char-correct' : charCorrectIdx.includes(i), 'char-incorrect' : charErrorIdx.includes(i)}"
     >{{char}}</span>
   </div>
   <div class="exercise-footer">
     <div class="exercise-hint">
       <p>{{hint}}</p>
     </div>
-    <button mat-flat-button color="primary" (click)="primaryButtonClick()">{{getPrimaryButtonText()}}</button>
+    <button mat-flat-button color="primary"
+            (click)="primaryButtonClick()">
+      {{getPrimaryButtonText()}}
+    </button>
+    <button mat-flat-button color="accent"
+            *ngIf="isSolutionButtonVisible()"
+            (click)="showSolutionClick()">
+      Lösung anzeigen
+    </button>
   </div>
 </div>
