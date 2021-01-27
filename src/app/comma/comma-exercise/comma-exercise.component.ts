@@ -19,7 +19,6 @@ export class CommaExerciseComponent implements OnInit {
   chars: string[] = [];
   charErrorIdx: number[] = [];
   charCorrectIdx: number[] = [];
-  hoverCharIndex = -1;
   currentQuestionIdx = -1;
   questions = EXAMPLE_QUESTIONS; // TODO
   hint = '';
@@ -116,21 +115,8 @@ export class CommaExerciseComponent implements OnInit {
       this.chars.splice(index, 1, ' ');
     } else if (char === ' ') {
       this.chars.splice(index, 1, ',');
-      this.hoverCharIndex = -1;
     } else if (nextChar === ' ') {
       this.chars.splice(index + 1, 1, ',');
-      this.hoverCharIndex = -1;
     }
-  }
-
-  onCharMouseOver(charSpan: HTMLSpanElement, index: number) {
-    const char = charSpan.textContent;
-    if (char === ' ' && this.chars[index - 1] !== ',' || char === ',') {
-      this.hoverCharIndex = index;
-    }
-  }
-
-  onCharMouseLeave(charSpan: HTMLSpanElement, index: number) {
-    this.hoverCharIndex = -1;
   }
 }

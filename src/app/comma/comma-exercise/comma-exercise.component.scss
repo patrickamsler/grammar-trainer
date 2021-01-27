@@ -12,7 +12,15 @@
     font-size: 20px;
     font-family: Roboto, monospace;
 
-    .char-hover {
+    .char-comma {
+      display: inline-block;
+      width: 9px;
+    }
+    .char-whitespace {
+      display: inline-block;
+      min-width: 10px;
+    }
+    .char-highlight:hover {
       background-color: $grey;
     }
     .char-correct {
